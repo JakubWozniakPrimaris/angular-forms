@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { UserService } from '../users/userService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -15,6 +16,7 @@ export class SignupComponent {
   password: string = '';
 
   private userService = inject(UserService);
+  private router = inject(Router);
 
   onSubmit() {
     console.log(this.email);
@@ -26,5 +28,8 @@ export class SignupComponent {
     });
 
     console.log(response);
+    if (response.error === '') {
+      this.router.navigate(['login']);
+    }
   }
 }

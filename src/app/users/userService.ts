@@ -37,6 +37,6 @@ export class UserService {
     }
 
     private saveUsers() {
-        localStorage.setItem('users', JSON.stringify(this.users()));
+        window.localStorage.setItem('users', JSON.stringify(this.users()));
     }
 }
