@@ -1,4 +1,5 @@
 form {
+    max-width: 30rem;
     top: 20vh;
     position: relative;
     margin: auto;

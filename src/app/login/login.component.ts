@@ -41,9 +41,6 @@ export class LoginComponent {
     const enteredEmail = this.form.value.email!;
     const enteredPassword = this.form.value.password!;
 
-    console.log(enteredEmail);
-    console.log(enteredPassword);
-
     const status = this.userService.logIn(enteredEmail, enteredPassword);
     console.log(status);
   }

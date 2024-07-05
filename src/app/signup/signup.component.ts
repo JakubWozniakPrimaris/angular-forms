@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 import { UserService } from '../users/userService';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -17,19 +18,19 @@ export class SignupComponent {
 
   private userService = inject(UserService);
   private router = inject(Router);
+  private toastrService = inject(ToastrService);
 
   onSubmit() {
-    console.log(this.email);
-    console.log(this.password);
-
     const response = this.userService.addUser({
       email: this.email,
       password: this.password
     });
 
-    console.log(response);
     if (response.error === '') {
       this.router.navigate(['login']);
+      this.toastrService.success('You have been successfully signed up!', 'Sign up');
+    } else {
+      this.toastrService.error(response.error, 'Sign up')
     }
   }
 }

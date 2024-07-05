@@ -27,7 +27,8 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "vendor/toastr/toastr.css"
             ],
             "scripts": []
           },
