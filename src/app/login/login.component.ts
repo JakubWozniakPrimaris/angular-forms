@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from '../users/userService';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginFormComponent {
+export class LoginComponent {
+  private userService = inject(UserService);
+
   form = new FormGroup({
     email: new FormControl('', {
       validators: [Validators.email, Validators.required, Validators.maxLength(100)]
@@ -35,9 +38,13 @@ export class LoginFormComponent {
       return;
     }
 
-    const enteredEmail = this.form.value.email;
-    const enteredPassword = this.form.value.password;
+    const enteredEmail = this.form.value.email!;
+    const enteredPassword = this.form.value.password!;
+
     console.log(enteredEmail);
     console.log(enteredPassword);
+
+    const status = this.userService.logIn(enteredEmail, enteredPassword);
+    console.log(status);
   }
 }
