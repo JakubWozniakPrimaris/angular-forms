@@ -1,18 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../users/user-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+
 import { ToastrService } from 'ngx-toastr';
+
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  private userService = inject(UserService);
+  private accountService = inject(AccountService);
   private router = inject(Router);
   private toastrService = inject(ToastrService);
 
@@ -25,19 +27,25 @@ export class LoginComponent {
     })
   })
 
+  isSubmitted = false;
+
   get emailInvalid() {
-    return this.form.controls.email.touched &&
-      this.form.controls.email.dirty &&
+    return (this.isSubmitted ||
+      (this.form.controls.email.touched &&
+      this.form.controls.email.dirty)) &&
       this.form.controls.email.invalid;
   }
 
   get passwordInvalid() {
-    return this.form.controls.password.touched &&
-      this.form.controls.password.dirty &&
+    return (this.isSubmitted ||
+      (this.form.controls.password.touched &&
+      this.form.controls.password.dirty)) &&
       this.form.controls.password.invalid;
   }
 
   onSubmit() {
+    this.isSubmitted = true;
+
     if (this.form.invalid) {
       return;
     }
@@ -45,8 +53,8 @@ export class LoginComponent {
     const enteredEmail = this.form.value.email!;
     const enteredPassword = this.form.value.password!;
 
-    this.userService.logIn(enteredEmail, enteredPassword);
-    if (this.userService.isAuthenticated()) {
+    this.accountService.logIn(enteredEmail, enteredPassword);
+    if (this.accountService.isAuthenticated()) {
       this.router.navigate(['dashboard']);
     } else {
       this.toastrService.error('Incorrect username or password', 'Login failed')

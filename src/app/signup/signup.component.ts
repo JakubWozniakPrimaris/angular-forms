@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-import { UserService } from '../users/user-service';
 import { Router } from '@angular/router';
+
 import { ToastrService } from 'ngx-toastr';
+
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,12 +17,12 @@ export class SignupComponent {
   email: string = '';
   password: string = '';
 
-  private userService = inject(UserService);
+  private accountService = inject(AccountService);
   private router = inject(Router);
   private toastrService = inject(ToastrService);
 
   onSubmit() {
-    const response = this.userService.addUser({
+    const response = this.accountService.registerAccount({
       email: this.email,
       password: this.password
     });

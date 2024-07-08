@@ -1,3 +1,4 @@
-h2 {
-    text-align: center;
+main {
+    display: grid;
+    margin: 5rem 0 0 5rem;
 }
