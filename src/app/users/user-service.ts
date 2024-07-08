@@ -1,4 +1,4 @@
-import { Injectable, signal } from "@angular/core";
+import { computed, Injectable, signal } from "@angular/core";
 
 import { User } from "./user";
 
@@ -6,8 +6,10 @@ import { User } from "./user";
     providedIn: 'root',
 })
 export class UserService {
-    users = signal<User[]>([]);
-    private loggedInUser?: User;
+    private users = signal<User[]>([]);
+    private loggedInUser = signal<User | undefined>(undefined);
+
+    isAuthenticated = computed(() => this.loggedInUser() !== undefined);
 
     constructor() {
         this.fetchUsers();
@@ -25,11 +27,13 @@ export class UserService {
     }
 
     logIn(email: string, password: string) {
-        this.loggedInUser = this.users().find(
+        this.loggedInUser.set(this.users().find(
             u => u.email === email && u.password === password
-        );
+        ));
+    }
 
-        return this.loggedInUser !== undefined;
+    logOut() {
+        this.loggedInUser.set(undefined);
     }
 
     private fetchUsers() {

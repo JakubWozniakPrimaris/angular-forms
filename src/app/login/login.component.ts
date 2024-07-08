@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../users/userService';
+import { UserService } from '../users/user-service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +13,8 @@ import { UserService } from '../users/userService';
 })
 export class LoginComponent {
   private userService = inject(UserService);
+  private router = inject(Router);
+  private toastrService = inject(ToastrService);
 
   form = new FormGroup({
     email: new FormControl('', {
@@ -41,7 +45,11 @@ export class LoginComponent {
     const enteredEmail = this.form.value.email!;
     const enteredPassword = this.form.value.password!;
 
-    const status = this.userService.logIn(enteredEmail, enteredPassword);
-    console.log(status);
+    this.userService.logIn(enteredEmail, enteredPassword);
+    if (this.userService.isAuthenticated()) {
+      this.router.navigate(['dashboard']);
+    } else {
+      this.toastrService.error('Incorrect username or password', 'Login failed')
+    }
   }
 }

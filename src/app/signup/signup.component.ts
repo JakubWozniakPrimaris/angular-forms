@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { UserService } from '../users/userService';
+import { UserService } from '../users/user-service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
