@@ -15,12 +15,12 @@ export const routes: Routes = [
     },
     {
         path: 'users',
-        loadComponent: () => import('./users/users.module').then(mod => mod.UsersModule),
+        loadChildren: () => import('./users/users.module').then(mod => mod.UsersModule),
         title: 'Users'
     },
     {
         path: 'tasks',
-        loadComponent: () => import('./tasks/tasks.component').then(mod => mod.TasksComponent),
+        loadChildren: () => import('./tasks/tasks.module').then(mod => mod.TasksModule),
         title: 'Tasks'
     }
 ];

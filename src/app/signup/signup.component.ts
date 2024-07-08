@@ -14,6 +14,8 @@ import { AccountService } from '../account.service';
   styleUrl: './signup.component.css'
 })
 export class SignupComponent {
+  firstName: string = '';
+  lastName: string = '';
   email: string = '';
   password: string = '';
 
@@ -22,16 +24,15 @@ export class SignupComponent {
   private toastrService = inject(ToastrService);
 
   onSubmit() {
-    const response = this.accountService.registerAccount({
-      email: this.email,
-      password: this.password
-    });
+    const response = this.accountService.registerAccount(
+      this.firstName, this.lastName, this.email, this.password
+    );
 
     if (response.error === '') {
       this.router.navigate(['login']);
       this.toastrService.success('You have been successfully signed up!', 'Sign up');
     } else {
-      this.toastrService.error(response.error, 'Sign up')
+      this.toastrService.error(response.error, 'Sign up');
     }
   }
 }

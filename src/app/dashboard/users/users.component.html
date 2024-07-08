@@ -1,1 +1,17 @@
+@if (isAddingUser()) {
+    <app-add-user (close)="onFinishAddUser()" />
+}
+
+<section>
 <h2>Users</h2>
+    <div>
+        <button (click)="onStartAddUser()"><span id="plus">+</span><span id="text">Add User</span></button>
+        <ul>
+            @for (account of accounts(); track account.uuid) {
+                <li>
+                    <app-user [account]="account"/>
+                </li>
+            }
+        </ul>
+    </div>
+</section>
