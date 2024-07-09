@@ -17,7 +17,7 @@ export class AccountService {
     private loggedInAccount = signal<Account | undefined>(undefined);
 
     accounts = this._accounts.asReadonly();
-    isAuthenticated = computed(() => this.loggedInAccount() !== undefined);
+    loggedInId = computed(() => this.loggedInAccount()?.uuid);
 
     constructor() {
         this.fetchUsers();

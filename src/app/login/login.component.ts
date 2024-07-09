@@ -54,7 +54,7 @@ export class LoginComponent {
     const enteredPassword = this.form.value.password!;
 
     this.accountService.logIn(enteredEmail, enteredPassword);
-    if (this.accountService.isAuthenticated()) {
+    if (this.accountService.loggedInId()) {
       this.router.navigate(['dashboard']);
     } else {
       this.toastrService.error('Incorrect username or password', 'Login failed')
